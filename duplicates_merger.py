@@ -5,7 +5,7 @@
 # Save the result to a CSV file.
 
 import pandas as pd
-from print_duplicates import find_triplicates
+from print_duplicates import find_multiples
 from anomalies_discovery import find_anomalies
 from load_and_clean_data import load_and_clean_data
 
@@ -19,7 +19,7 @@ def merge_anomalies(path_to_csv, output_directory):
 
 def merge_duplicates(path_to_csv, output_directory):
     df = load_and_clean_data(path_to_csv)
-    duplicates = find_triplicates(df)
+    duplicates = find_multiples(df)
     merged_duplicates = duplicates.groupby(['Unit No.', 'Name'], as_index=False).agg('first')
     return merged_duplicates
 
