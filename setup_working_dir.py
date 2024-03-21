@@ -3,8 +3,10 @@ import os
 
 import os
 
-def get_directory_path(prompt_message):
+def get_directory_path(prompt_message, default_directory="Downloads"):
     relative_directory = input(prompt_message).strip()
+    if not relative_directory:
+        relative_directory = default_directory
     return os.path.join(os.path.expanduser('~'), relative_directory)
 
 def validate_directory(directory):
