@@ -3,7 +3,7 @@ import pandas as pd
 from load_and_clean_data import load_and_clean_data
 
 
-def find_multiples(df):
+def filter_unit_numbers_by_criteria(df):
     unit_no_counts = df['Unit No.'].value_counts()
     multiple_unit_nos = unit_no_counts[unit_no_counts > 2].index.tolist()
     multiples = df[df['Unit No.'].isin(multiple_unit_nos) & (df['Unit No.'] != 'Blank')]
@@ -23,7 +23,7 @@ def output_multiples(df, path_to_output_file):
 def print_multiples(path_to_csv, output_directory):
     path_to_output_file = f"{output_directory}/multiples.csv"
     df = load_and_clean_data(path_to_csv)
-    multiples = (df)
+    multiples = filter_unit_numbers_by_criteria(df)
     output_multiples(multiples, path_to_output_file)
 
 def print_duplicates(path_to_csv, output_directory):
