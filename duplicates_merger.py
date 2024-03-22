@@ -25,42 +25,14 @@ def merge_anomalies(path_to_csv, output_directory):
 
 def merge_duplicates(path_to_csv, output_directory):
     df = load_and_clean_data(path_to_csv)
-
-    # Store the original column order
-    original_columns = df.columns.tolist()
-
-    # Specify columns to sum and to take the first value of
-    sum_columns = ['Jan-24', 'Feb-24', 'Mar-24', 'Apr-24', 'May-24', 'Jun-24',
-                   'Jul-24', 'Aug-24', 'Sep-24', 'Oct-24', 'Nov-24', 'Dec-24']
-
-
-    # Convert values in sum_columns to numeric
-    for col in sum_columns:
-        df.loc[:, col] = df.loc[:, col].apply(convert_to_numeric)
-
-    df.to_csv(f"{output_directory}/converted_values_for_sum_columns.csv", index=False)
-
+    sum_columns = ['Jan-24', 'Feb-24', 'Mar-24', 'Apr-24', 'May-24', 'Jun-24', 'Jul-24', 'Aug-24', 'Sep-24', 'Oct-24', 'Nov-24', 'Dec-24']
     first_columns = [col for col in df.columns if col not in sum_columns and col != 'Name']
 
-    # Define aggregation dictionary
-    agg_dict = {col: 'sum' for col in sum_columns}
-    agg_dict.update({col: 'first' for col in first_columns})
+    df[sum_columns] = df[sum_columns].map(convert_to_numeric)
+    agg_dict = {**{col: 'sum' for col in sum_columns}, **{col: 'first' for col in first_columns}}
 
-    # Apply grouping and aggregation
-    merged_duplicates = df.groupby(['Name'], as_index=False).agg(agg_dict)
-
-    # Re-order the DataFrame to match the original column order
-    merged_duplicates = merged_duplicates[original_columns]
-
-    # Optionally, save the merged DataFrame to a CSV file
+    merged_duplicates = df.groupby(['Name'], as_index=False).agg(agg_dict)[df.columns.tolist()]
     merged_duplicates.to_csv(f"{output_directory}/final_merge.csv", index=False)
     return merged_duplicates
 
-
-def print_merges(path_to_csv, output_directory):
-    anomalies = merge_anomalies(path_to_csv, output_directory)
-    duplicates = merge_duplicates(path_to_csv, output_directory)
-    merged = pd.concat([anomalies, duplicates]).drop_duplicates()
-    merged.to_csv(f"{output_directory}/merges.csv", index=False)
-    print("done")
 
