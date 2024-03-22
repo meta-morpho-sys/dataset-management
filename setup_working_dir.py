@@ -15,8 +15,10 @@ def validate_directory(directory):
     else:
         print(f"Directory is set to: {directory}")
 
-def validate_and_get_file_path(directory):
+def validate_and_get_file_path(directory, default_filename="test_sheet.csv"):
     filename = input("Please enter the source file name. Example <management_fees_merge.csv>: ").strip()
+    if not filename:
+        filename = default_filename
     file_path = f"{directory}/{filename}"
     if not os.path.isfile(file_path):
         print(f"\nError: The path {file_path} is not a valid directory.\nTIP: Check the filename and its location and rerun the program")
