@@ -10,6 +10,25 @@ from anomalies_discovery import find_anomalies
 from load_and_clean_data import load_and_clean_data
 
 
+def convert_to_numeric(value):
+    # First, check if the value is a string. If not, return the value as is.
+    if isinstance(value, str):
+        # If it's a string, check for parentheses and commas for conversion
+        try:
+            if value.startswith('(') and value.endswith(')'):
+                # Remove parentheses, replace commas, and convert to negative float
+                return -pd.to_numeric(value.strip('()').replace(',', ''), errors='coerce')
+            else:
+                # Replace commas and convert to float
+                return pd.to_numeric(value.replace(',', ''), errors='coerce')
+        except ValueError:
+            # In case of a ValueError during conversion, return NaN to indicate failure
+            return pd.np.nan
+    else:
+        # If the value is already numeric (int, float), return it as is
+        return value
+
+
 def merge_anomalies(path_to_csv, output_directory):
     df = load_and_clean_data(path_to_csv)
     anomalies = find_anomalies(df)
@@ -25,6 +44,11 @@ def merge_duplicates(path_to_csv, output_directory):
     # Specify columns to sum and to take the first value of
     sum_columns = ['Jan-24', 'Feb-24', 'Mar-24', 'Apr-24', 'May-24', 'Jun-24',
                    'Jul-24', 'Aug-24', 'Sep-24', 'Oct-24', 'Nov-24', 'Dec-24']
+
+    # Convert values in sum_columns, treating parentheses as negative
+    for col in sum_columns:
+        duplicates[col] = duplicates[col].apply(convert_to_numeric)
+
     first_columns = [col for col in duplicates.columns if col not in sum_columns and col != 'Name']
 
     # Define aggregation dictionary
