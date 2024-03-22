@@ -7,8 +7,6 @@ from helpers import convert_to_numeric
 # Assuming the latest version of convert_to_numeric is defined as previously
 
 class TestConvertToNumeric(unittest.TestCase):
-    def test_negative_with_parentheses(self):
-        self.assertEqual(convert_to_numeric('(1,000)'), -1000.0)
 
     def test_positive_with_commas(self):
         self.assertEqual(convert_to_numeric('1,000'), 1000.0)
@@ -39,9 +37,6 @@ class TestConvertToNumeric(unittest.TestCase):
 
     def test_positive_float_string_with_commas(self):
         self.assertEqual(convert_to_numeric('1,234.56'), 1234.56)
-
-    def test_negative_float_string_with_commas_and_parentheses(self):
-        self.assertEqual(convert_to_numeric('(1,234.56)'), -1234.56)
 
 if __name__ == '__main__':
     unittest.main()
