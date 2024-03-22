@@ -32,7 +32,11 @@ def convert_to_numeric(value):
 def merge_anomalies(path_to_csv, output_directory):
     df = load_and_clean_data(path_to_csv)
     anomalies = find_anomalies(df)
+    original_columns = anomalies.columns.tolist()  # Store the original column order
+
     merged_anomalies = anomalies.groupby(['Name'], as_index=False).agg('first')
+    # Re-order the DataFrame to match the original column order
+    merged_anomalies = merged_anomalies[original_columns]
 
     return merged_anomalies
 
@@ -40,6 +44,7 @@ def merge_anomalies(path_to_csv, output_directory):
 def merge_duplicates(path_to_csv, output_directory):
     df = load_and_clean_data(path_to_csv)
     duplicates = find_duplicates(df)
+    original_columns = duplicates.columns.tolist()  # Store the original column order
 
     # Specify columns to sum and to take the first value of
     sum_columns = ['Jan-24', 'Feb-24', 'Mar-24', 'Apr-24', 'May-24', 'Jun-24',
@@ -57,6 +62,9 @@ def merge_duplicates(path_to_csv, output_directory):
 
     # Apply grouping and aggregation
     merged_duplicates = duplicates.groupby(['Name'], as_index=False).agg(agg_dict)
+
+    # Re-order the DataFrame to match the original column order
+    merged_duplicates = merged_duplicates[original_columns]
 
     # Optionally, save the merged DataFrame to a CSV file
     merged_duplicates.to_csv(f"{output_directory}/merged_duplicates.csv", index=False)
