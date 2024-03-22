@@ -22,17 +22,19 @@ def find_duplicates(df):
     duplicates = df[df['Unit No.'].isin(duplicate_unit_nos) & (df['Unit No.'] != 'Blank')]
     return duplicates
 
-def output_multiples(df, path_to_output_file):
+
+def output_new_df(df, path_to_output_file):
     df.to_csv(path_to_output_file, index=False)
+
 
 def print_multiples(path_to_csv, output_directory):
     path_to_output_file = f"{output_directory}/non_standard_unit_nos.csv"
     df = load_and_clean_data(path_to_csv)
     multiples = filter_unit_numbers_by_criteria(df)
-    output_multiples(multiples, path_to_output_file)
+    output_new_df(multiples, path_to_output_file)
 
 def print_duplicates(path_to_csv, output_directory):
     path_to_output_file = f"{output_directory}/duplicates.csv"
     df = load_and_clean_data(path_to_csv)
     duplicates = find_duplicates(df)
-    output_multiples(duplicates, path_to_output_file)
+    output_new_df(duplicates, path_to_output_file)
