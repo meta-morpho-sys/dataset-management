@@ -16,13 +16,13 @@ def convert_to_numeric(value):
 from load_and_clean_data import load_and_clean_data
 
 
-def update_lost_names(path_to_csv, output_directory):
-    path_to_output_file = f"{output_directory}/normalised_names.csv"
-    df = load_and_clean_data(path_to_csv)
+def update_lost_names(df):
     # A helper function to extract the base name (without the "LOST ..." part)
     def base_name(name):
         if "LOST" in name:
-            return name.split(" LOST")[0]
+            print(name)
+            print(name.split(" (LOST")[0])
+            return name.split(" (LOST")[0]
         return name
 
     # Apply the helper function to create a new column for base names
@@ -33,18 +33,15 @@ def update_lost_names(path_to_csv, output_directory):
     print("lost_mapping")
     print(lost_mapping)
 
-    # Update the 'Name' column based on the mapping
-    df['Name'] = df['BaseName'].apply(lambda bn: lost_mapping.get(bn, bn))
+    # Ensure we apply the "LOST ..." part only to names missing it but have an equivalent base name with it
+    def update_name_with_lost(base_name, name):
+        # If the base name has a corresponding "LOST ..." version, update accordingly
+        if base_name in lost_mapping and name == base_name:
+            return lost_mapping[base_name]
+        return name
+
+    df['Name'] = df.apply(lambda row: update_name_with_lost(row['BaseName'], row['Name']), axis=1)
 
     # Drop the helper column as it's no longer needed
     df.drop(columns=['BaseName'], inplace=True)
-    df.to_csv(path_to_output_file, index=False)
     return df
-
-# write a function which will compare identical names in the values of 'Name' column,
-# will look for a substring (LOST ...) in the values
-# and will add the substring to the value of where it doesn't exist.
-# Example: 'Kings Gardens LOST 123' and 'Kings Gardens'
-# should be converted to
-# 'Kings Gardens LOST 123' and 'Kings Gardens LOST 123' respectively.
-# The function should return a DataFrame with the updated values.

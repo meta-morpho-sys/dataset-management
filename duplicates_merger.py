@@ -1,4 +1,4 @@
-from helpers import convert_to_numeric
+from helpers import convert_to_numeric, update_lost_names
 from anomalies_discovery import find_anomalies
 from load_and_clean_data import load_and_clean_data
 
@@ -17,6 +17,9 @@ def merge_anomalies(path_to_csv, output_directory):
 
 def merge_duplicates(path_to_csv, output_directory):
     df = load_and_clean_data(path_to_csv)
+    # Update the DataFrame with normalized names
+    df = update_lost_names(df)
+
     sum_columns = ['Jan-24', 'Feb-24', 'Mar-24', 'Apr-24', 'May-24', 'Jun-24', 'Jul-24', 'Aug-24', 'Sep-24', 'Oct-24', 'Nov-24', 'Dec-24']
     first_columns = [col for col in df.columns if col not in sum_columns and col != 'Name']
 
