@@ -16,32 +16,61 @@ def convert_to_numeric(value):
 from load_and_clean_data import load_and_clean_data
 
 
+# def update_lost_names(df):
+#     # A helper function to extract the base name (without the "LOST ..." part)
+#     def base_name(name):
+#         if "LOST" in name:
+#             print(name)
+#             print(name.split(" (LOST")[0])
+#             return name.split(" (LOST")[0]
+#         return name
+#
+#     # Apply the helper function to create a new column for base names
+#     df['BaseName'] = df['Name'].apply(base_name) if df['Unit No.'].du
+#
+#     # Find names with the "LOST ..." substring and create a mapping from base name to full name
+#     lost_mapping = {row['BaseName']: row['Name'] for index, row in df.iterrows() if "LOST" in row['Name']}
+#     print("lost_mapping")
+#     print(lost_mapping)
+#
+#     # Ensure we apply the "LOST ..." part only to names missing it but have an equivalent base name with it
+#     def update_name_with_lost(base_name, name):
+#         # If the base name has a corresponding "LOST ..." version, update accordingly
+#         if base_name in lost_mapping and name == base_name:
+#             return lost_mapping[base_name]
+#         return name
+#
+#     df['Name'] = df.apply(lambda row: update_name_with_lost(row['BaseName'], row['Name']), axis=1)
+#
+#     # Drop the helper column as it's no longer needed
+#     df.drop(columns=['BaseName'], inplace=True)
+#     return df
+
+
 def update_lost_names(df):
     # A helper function to extract the base name (without the "LOST ..." part)
     def base_name(name):
         if "LOST" in name:
-            print(name)
-            print(name.split(" (LOST")[0])
             return name.split(" (LOST")[0]
         return name
 
-    # Apply the helper function to create a new column for base names
+    # Correcting the syntax and applying the helper function conditionally
+    # based on 'Unit No.' values being the same for pairs with identical base names.
     df['BaseName'] = df['Name'].apply(base_name)
 
-    # Find names with the "LOST ..." substring and create a mapping from base name to full name
-    lost_mapping = {row['BaseName']: row['Name'] for index, row in df.iterrows() if "LOST" in row['Name']}
-    print("lost_mapping")
-    print(lost_mapping)
+    # Create a mapping from (base name, Unit No.) to the full name with "LOST ..." if it exists
+    lost_mapping = {(row['BaseName'], row['Unit No.']): row['Name'] for index, row in df.iterrows() if
+                    "LOST" in row['Name']}
 
-    # Ensure we apply the "LOST ..." part only to names missing it but have an equivalent base name with it
-    def update_name_with_lost(base_name, name):
-        # If the base name has a corresponding "LOST ..." version, update accordingly
-        if base_name in lost_mapping and name == base_name:
-            return lost_mapping[base_name]
-        return name
+    # Function to update the name if there's a matching base name and unit number with "LOST ..."
+    def update_name(row):
+        key = (row['BaseName'], row['Unit No.'])
+        return lost_mapping.get(key, row['Name'])
 
-    df['Name'] = df.apply(lambda row: update_name_with_lost(row['BaseName'], row['Name']), axis=1)
+    # Applying the update_name function to each row
+    df['Name'] = df.apply(update_name, axis=1)
 
     # Drop the helper column as it's no longer needed
     df.drop(columns=['BaseName'], inplace=True)
+
     return df
