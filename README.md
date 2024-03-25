@@ -28,4 +28,4 @@ and follow the instructions that should appear on your screen.
 3. Provide a name for the output directory. It can be any name. You must provide a path relative to your home directory.
 4. Here is an example of what the prompt is like:
 ![img_1.png](img_1.png)image.png
-5. Navigate to your output folder. You should see `final_merge.csv`  which is the complete merge of all duplicates. Also, you will find an `insights/` directory where you can inspect some anomalies found while processing the Source File. 
+5. Navigate to your output folder. You should see `final_merge.csv`  which contains the cleaned data and is the final merge of all duplicates. Also, you will find an `insights/` directory where you can inspect some anomalies found while processing the Source File. 
