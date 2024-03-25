@@ -74,3 +74,23 @@ def update_lost_names(df):
     df.drop(columns=['BaseName'], inplace=True)
 
     return df
+
+
+def filter_unit_numbers_by_criteria(df):
+    # Filter to include rows where 'Unit No.' is not 'Blank'
+    df_filtered = df[df['Unit No.'] != 'Blank']
+    # Find 'Unit No.' that appear more than twice
+    multiple_unit_nos = df_filtered['Unit No.'].value_counts()[lambda x: x > 2].index
+
+    # Filter rows based on 'Unit No.' criteria
+    multiples = df_filtered[df_filtered['Unit No.'].isin(multiple_unit_nos)]
+    alphanumeric = df_filtered[df_filtered['Unit No.'].str.contains('[a-zA-Z]') & df_filtered['Unit No.'].str.contains('[0-9]')]
+    alpha = df_filtered[df_filtered['Unit No.'].str.isalpha()]
+    return pd.concat([multiples, alphanumeric, alpha]).drop_duplicates()
+
+
+def find_duplicates(df):
+    unit_no_counts = df['Unit No.'].value_counts()
+    duplicate_unit_nos = unit_no_counts[unit_no_counts == 2].index.tolist()
+    duplicates = df[df['Unit No.'].isin(duplicate_unit_nos) & (df['Unit No.'] != 'Blank')]
+    return duplicates
