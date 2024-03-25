@@ -1,5 +1,6 @@
 .DS_Store
 build/*
-dist/*
+dist/Dataset-management*
+
 Dataset-management*
 
