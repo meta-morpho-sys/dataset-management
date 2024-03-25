@@ -1,6 +1,5 @@
-from helpers import convert_to_numeric, update_lost_names
+from helpers import convert_to_numeric, update_lost_names, load_and_clean_data
 from anomalies_discovery import find_anomalies
-from load_and_clean_data import load_and_clean_data
 
 
 def merge_anomalies(path_to_csv, output_directory):

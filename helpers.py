@@ -13,40 +13,6 @@ def convert_to_numeric(value):
     return value
 
 
-from load_and_clean_data import load_and_clean_data
-
-
-# def update_lost_names(df):
-#     # A helper function to extract the base name (without the "LOST ..." part)
-#     def base_name(name):
-#         if "LOST" in name:
-#             print(name)
-#             print(name.split(" (LOST")[0])
-#             return name.split(" (LOST")[0]
-#         return name
-#
-#     # Apply the helper function to create a new column for base names
-#     df['BaseName'] = df['Name'].apply(base_name) if df['Unit No.'].du
-#
-#     # Find names with the "LOST ..." substring and create a mapping from base name to full name
-#     lost_mapping = {row['BaseName']: row['Name'] for index, row in df.iterrows() if "LOST" in row['Name']}
-#     print("lost_mapping")
-#     print(lost_mapping)
-#
-#     # Ensure we apply the "LOST ..." part only to names missing it but have an equivalent base name with it
-#     def update_name_with_lost(base_name, name):
-#         # If the base name has a corresponding "LOST ..." version, update accordingly
-#         if base_name in lost_mapping and name == base_name:
-#             return lost_mapping[base_name]
-#         return name
-#
-#     df['Name'] = df.apply(lambda row: update_name_with_lost(row['BaseName'], row['Name']), axis=1)
-#
-#     # Drop the helper column as it's no longer needed
-#     df.drop(columns=['BaseName'], inplace=True)
-#     return df
-
-
 def update_lost_names(df):
     # A helper function to extract the base name (without the "LOST ..." part)
     def base_name(name):
@@ -94,3 +60,10 @@ def find_duplicates(df):
     duplicate_unit_nos = unit_no_counts[unit_no_counts == 2].index.tolist()
     duplicates = df[df['Unit No.'].isin(duplicate_unit_nos) & (df['Unit No.'] != 'Blank')]
     return duplicates
+
+
+def load_and_clean_data(path_to_csv):
+    df = pd.read_csv(path_to_csv)
+    df.columns = df.columns.str.strip()
+    df[['Unit No.', 'Name']] = df[['Unit No.', 'Name']].fillna('Blank')
+    return df

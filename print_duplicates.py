@@ -1,7 +1,6 @@
 import os
 
-from helpers import filter_unit_numbers_by_criteria, find_duplicates
-from load_and_clean_data import load_and_clean_data
+from helpers import filter_unit_numbers_by_criteria, find_duplicates, load_and_clean_data
 
 
 def output_new_df(df, path_to_output_file):
@@ -14,6 +13,7 @@ def detect_non_standard_unit_nos(path_to_csv, output_directory):
     df = load_and_clean_data(path_to_csv)
     multiples = filter_unit_numbers_by_criteria(df)
     output_new_df(multiples, path_to_output_file)
+
 
 def print_duplicates(path_to_csv, output_directory):
     path_to_output_file = f"{output_directory}/insights/duplicates.csv"
