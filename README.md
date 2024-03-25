@@ -5,7 +5,10 @@ The utility is written in Python, using Pandas package. It's purpose it to clean
 and was created for a real life example of dataset from finance sector. 
 It follows the convention of the "Data Science" pipeline, where the data is loaded, cleaned, transformed and then prepared for analysis.
 The input file should follow the following columns structure:
-![img.png](img.png)
+
+
+| 	Unit No.|	Name|	Jan-24|	Feb-24|	Mar-24|	Apr-24|	May-24|	Jun-24|	Jul-24|	Aug-24|	Sep-24|	Oct-24|	Nov-24	|Dec-24|
+|----------|---|---|---|---|---|---|---|---|---|---|---|---|--|
 
 But it can be easily modified to fit any other dataset.
 
@@ -25,4 +28,4 @@ and follow the instructions that should appear on your screen.
 3. Provide a name for the output directory. It can be any name. You must provide a path relative to your home directory.
 4. Here is an example of what the prompt is like:
 ![img_1.png](img_1.png)image.png
-5. Navigate to your output folder. You should see `final_merge.csv`  which is the complete merge of all dups. Also, you will find an `insights/` directory where you can inspect some anomalies found while processing the Source File. 
+5. Navigate to your output folder. You should see `final_merge.csv`  which is the complete merge of all duplicates. Also, you will find an `insights/` directory where you can inspect some anomalies found while processing the Source File. 
