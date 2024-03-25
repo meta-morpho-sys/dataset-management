@@ -16,7 +16,7 @@ def validate_directory(directory):
         print(f"Directory is set to: {directory}")
 
 def validate_and_get_file_path(directory, default_filename="test_sheet.csv"):
-    filename = input("Please enter the source file name. Example <management_fees_merge.csv>: ").strip()
+    filename = input("Please enter the source file name. \nExample: < management_fees_merge.csv >: ").strip()
     if not filename:
         filename = default_filename
     file_path = f"{directory}/{filename}"
@@ -39,7 +39,7 @@ def prepare_location():
     validate_directory(source_directory)
     path_to_csv = validate_and_get_file_path(source_directory)
     output_directory = get_directory_path("Please enter the output directory path relative to your home directory: ")
-    ensure_directory_exists(output_directory)
+    os.makedirs(f"{output_directory}/insights/", exist_ok=True)
     print("The source directory is:", source_directory)
     print("The output directory is:", output_directory)
     return path_to_csv, output_directory
