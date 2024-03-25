@@ -13,7 +13,7 @@ def output_anomalies(df, path_to_output_file):
 
 
 def visualise_anomalies(path_to_csv, output_directory):
-    path_to_output_file = f"{output_directory}/names_with_blank_numbers.csv"
+    path_to_output_file = f"{output_directory}/insights/names_with_blank_numbers.csv"
     df = load_and_clean_data(path_to_csv)
     anomalies = find_anomalies(df)
     output_anomalies(anomalies, path_to_output_file)
