@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
 
-from helpers import convert_to_numeric
+from data_clean_utility.helpers import convert_to_numeric
 
 
 # Assuming the latest version of convert_to_numeric is defined as previously
