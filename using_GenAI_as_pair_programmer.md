@@ -10,9 +10,9 @@ Recently, I went through a GenAI tools training: https://www.linkedin.com/learni
 
 
 ### The Problem
-This was based on a real-life problem I encountered recently.
-Someone had a dataset that needed some preprocessing before they could use it for forecasting.
-The dataset contained dirty data - missing values, inconsistencies, columns that needed to be transformed as well as rows that needed to be deduplicated after cleaning up the data. 
+It was a personal project, based on a real-life problem, where I was working with a dataset from the finance sector. 
+The dataset needed some preprocessing before it could be used for forecasting. 
+It contained dirty data - missing values, inconsistencies, columns that needed to be transformed as well as rows that needed to be deduplicated after the data had been cleaned and transformed. 
 The data cleaning and transformation process was time-consuming and error-prone, and I wanted to automate it to save time and reduce the risk of mistakes.
 To automate this process I used Python and the Python Pandas - a powerful data manipulation library, which I had a rough idea of how to use and some previous experience. 
 
@@ -47,20 +47,21 @@ I would love my more experienced in Python and Pandas colleagues to review the c
 This brings me to the next point.
 
 ### Caveats and things to consider
-* The tools are trained on a large dataset of code, but there is a time cutoff for the training data (up to April 2023 for GPT-4), so they may not always generate the most up-to-date or idiomatic code.
-* GitHub Copilot is built on top of OpenAI Codex which is trained on a selection of the English language, public GitHub repositories, and other publicly available source code. The Copilot Chat experience, was recently upgraded bringing more accurate and useful code suggestions with OpenAI's GPT–4. 
-* While pair programming with AI tools was a great experience overall, there were some limitations:
-  * ChatGPT sometimes generated code that didn't work as expected, and Copilot occasionally suggested inefficient solutions.
-  * It's important to review the code carefully and test it thoroughly before using it in production.
-  * The tools will only give you what you ask for, no more. You need to keep refining your questions to get the desired output, but it may get messy.
-* Besides the above points it is worth to notice that both tools are paid for services and require a subscription.
+- The tools are trained on a large dataset of code, but there is a time cutoff for the training data (up to April 2023 for GPT-4), so they may not always generate the most up-to-date or idiomatic code.
+- GitHub Copilot is built on top of OpenAI Codex which is trained on a selection of the English language, public GitHub repositories, and other publicly available source code. The Copilot Chat experience was recently upgraded bringing more accurate and useful code suggestions with OpenAI's GPT–4. 
+- While pair programming with AI tools was a great experience overall, there were some limitations:
+  - ChatGPT sometimes generated code that didn't work as expected, and Copilot occasionally suggested inefficient solutions.
+  - It's important to review the code carefully and test it thoroughly before using it in production.
+  - The tools will only give you what you ask for, no more. You need to keep refining your questions to get the desired output, but it may get messy.
+- Besides the above points it is worth to notice that both tools are paid for services and require a subscription.
 
 ### Tips for Pair Programming with AI
-If you're thinking about trying pair programming with AI tools, here are a few tips to help you get started:
-- Clearly explain the problem to the AI tool and provide as much context and detail as possible.
-- Give it as much context as possible, or bring the tool into the context of the codebase, like you can do with GitHub Copilot.
-- Review and make sure you fully understand the code that the GenAI tool has produced for you, iterate on the code and make changes as needed. 
-- Remember, the GenAI tools are Large Language Models(LLMs), they work by predicting the next word based on the context of the input, so they may not always generate the most efficient or optimal code.
+If you're thinking about trying pair programming with AI tools, here are a few tips from my experience:
+- DON'T give real data to the AI tool, it is important to preserve the privacy of your data.
+- DO Clearly explain the problem to the AI tool and provide as much context and detail as possible.
+- DO Give it as much context as possible or bring the tool into the context of the codebase, like you can do with GitHub Copilot.
+- DO Review and make sure you fully understand the code that the GenAI tool has produced for you, iterate on the code and make changes as needed. 
+- DO Remember, the GenAI tools are Large Language Models(LLMs), they work by predicting the next word based on the context of the input, so they may not always generate the most efficient or optimal code.
 - And finally, the AI tools are there to help you, not replace you.
 
 ### Conclusion
