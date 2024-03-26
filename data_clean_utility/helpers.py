@@ -16,12 +16,10 @@ def convert_to_numeric(value):
 def update_lost_names(df):
     # A helper function to extract the base name (without the "LOST ..." part)
     def base_name(name):
-        if "LOST" in name:
-            return name.split(" (LOST")[0]
-        return name
+        return name.split(" (LOST")[0] if "LOST" in name else name
 
-    # Correcting the syntax and applying the helper function conditionally
-    # based on 'Unit No.' values being the same for pairs with identical base names.
+    # Apply the helper function conditionally based on 'Unit No.' values
+    # being the same for pairs with identical base names.
     df['BaseName'] = df['Name'].apply(base_name)
 
     # Create a mapping from (base name, Unit No.) to the full name with "LOST ..." if it exists
